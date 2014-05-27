@@ -34,7 +34,6 @@ Listening on 127.0.0.1:9393, CTRL+C to stop
 returns
 
 >>
-
 16361 s000  S+     0:00.65 /Users/Host/.rvm/gems/ruby-1.9.3-p545/bin/shotgun
 
 2. Terminate the process using the ```$ kill -9``` command and <process id>
@@ -45,7 +44,8 @@ returns
 
 Error
 
-``` > ActiveRecord::NoDatabaseError: FATAL:  role "postgres" does not exist```
+>>
+ActiveRecord::NoDatabaseError: FATAL:  role "postgres" does not exist```
 
 1. Execute the following command in your terminal
 
