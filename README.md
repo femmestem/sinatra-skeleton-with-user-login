@@ -27,7 +27,7 @@ Listening on 127.0.0.1:9393, CTRL+C to stop
 /Users/Titannia/.rvm/gems/ruby-1.9.3-p545/gems/eventmachine-1.0.3/lib/eventmachine.rb:526:in `start_tcp_server': no acceptor (port is in use or requires root privileges) (RuntimeError)
 
 
-1. Find the process ID for the session of shotgun that is running in the background
+- 1 Find the process ID for the session of shotgun that is running in the background
 
 ```$ ps ax | grep shotgun```
 
@@ -36,7 +36,7 @@ returns
 >>
 16361 s000  S+     0:00.65 /Users/Host/.rvm/gems/ruby-1.9.3-p545/bin/shotgun
 
-2. Terminate the process using the ```$ kill -9``` command and process id
+- 2 Terminate the process using the ```$ kill -9``` command and process id
 
 ```$ kill -9 16361```
 
