@@ -36,7 +36,7 @@ returns
 >>
 16361 s000  S+     0:00.65 /Users/Host/.rvm/gems/ruby-1.9.3-p545/bin/shotgun
 
-2. Terminate the process using the ```$ kill -9``` command and <process id>
+2. Terminate the process using the ```$ kill -9``` command and process id
 
 ```$ kill -9 16361```
 
