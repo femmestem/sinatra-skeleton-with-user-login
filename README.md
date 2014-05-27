@@ -12,7 +12,9 @@ It is meant as a teaching guide with extensive notes on how methods, gems, modul
 
 Note: To prevent gem version conflicts, either delete `Gemfile.lock` before running
 ```$ bundle install``` or run ```$ bundle exec rake``` for rake commands.
+
 2. Run ```$ shotgun```
+
 3. Open a browser window with address http://localhost:9393
 
 
