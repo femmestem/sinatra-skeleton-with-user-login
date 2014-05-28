@@ -38,9 +38,11 @@
     </ul>
   </nav>
   <div class="container">
-    <% if @errors %>
-      <div class="errors"><%= @errors %></div>
+
+    <% if session[:error] %>
+      <div class="errors"><%= session[:error] %></div>
     <% end %>
+    
     <%= yield %>
   </div>
 

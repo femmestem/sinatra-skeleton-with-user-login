@@ -1,20 +1,28 @@
 get '/' do
+  error_nullifier 
+
   erb :index
 end
 
 get '/user/new' do
+if session[:error] == error[:incorrect]
+  error_nullifier
+end
+
   erb :"/users/new_user"
 end
 
 post '/user/new' do
+  error_nullifier 
 
   unless User.exists?(email: params[:email])
     user = User.create_with( params[:user] ).find_or_create_by(email: params[:email]) # Overkill but whatever
     session[:user_id] = user.id
     redirect to "/user/#{user.id}"
   else
-    @errors = "User already exists, please log in."
-    erb :"/users/new_user"
+    session[:error] = error[:user_exists]
+    redirect '/user/new'
+
   end
 end
 
@@ -25,6 +33,11 @@ end
 # http://en.wikipedia.org/wiki/Post/Redirect/Get
 
 get '/login' do 
+  if session[:error] == error[:user_exists]
+    error_nullifier
+  end
+
+
   if current_user 
     redirect '/'
   else
@@ -33,6 +46,7 @@ get '/login' do
 end
 
 post '/login' do
+  error_nullifier
   # returns either a user object from the database or `nil`
   user = User.authenticate(email: params[:email], password: params[:password])
 
@@ -40,8 +54,8 @@ post '/login' do
     session[:user_id] = user.id
     redirect to "/user/#{user.id}"
   else
-    @errors = "Email or password is incorrect."
-    erb :"/users/login"
+    session[:error] = error[:incorrect]
+    redirect '/login'
   end
 end
 
@@ -100,12 +114,14 @@ end
 # end
 
 post '/logout' do
+  error_nullifier 
   session[:user_id] = nil
   redirect to '/'
 end
 
 # for development debugging only
 get '/logout' do
+  error_nullifier 
   session[:user_id] = nil
   redirect to '/'
 end
