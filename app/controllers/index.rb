@@ -1,9 +1,21 @@
 get '/' do
-  erb :login
+  erb :index
 end
 
 get '/user/new' do
-  erb :new_user
+  erb :"/users/new_user"
+end
+
+post '/user/new' do
+
+  unless User.exists?(email: params[:email])
+    user = User.create_with( params[:user] ).find_or_create_by(email: params[:email]) # Overkill but whatever
+    session[:user_id] = user.id
+    redirect to "/user/#{user.id}"
+  else
+    @errors = "User already exists, please log in."
+    erb :"/users/new_user"
+  end
 end
 
 # post routes should always redirect to a get route
@@ -11,6 +23,15 @@ end
 
 # See the Post/Redirect/Get Design Pattern wiki for more info
 # http://en.wikipedia.org/wiki/Post/Redirect/Get
+
+get '/login' do 
+  if current_user 
+    redirect '/'
+  else
+    erb :"/users/login"
+  end
+end
+
 post '/login' do
   # returns either a user object from the database or `nil`
   user = User.authenticate(email: params[:email], password: params[:password])
@@ -19,7 +40,8 @@ post '/login' do
     session[:user_id] = user.id
     redirect to "/user/#{user.id}"
   else
-    redirect to '/'
+    @errors = "Email or password is incorrect."
+    erb :"/users/login"
   end
 end
 
@@ -46,9 +68,9 @@ get '/user/:user_id' do
   @user = User.find(user_id) if User.exists?(user_id)
 
   if @user == current_user
-    erb :owner_profile
+    erb :"/users/owner_profile"
   elsif @user
-    erb :user_profile
+    erb :"/users/user_profile"
   elsif current_user
     # erb :profile_does_not_exist
     redirect to '/'

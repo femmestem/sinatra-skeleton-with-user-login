@@ -77,7 +77,7 @@ end
 
 # Set up the controllers and helpers
 Dir[APP_ROOT.join('app', 'controllers', '*.rb')].each { |file| require file }
-Dir[APP_ROOT.join('app', 'helpers', '*.rb')].each { |file| require file
+Dir[APP_ROOT.join('app', 'helpers', '*.rb')].each { |file| require file }
 # Dir is a standard library class in Ruby
 # Takes a string (assumed to be a path) and creates an array of
 # the files that end in `.rb'

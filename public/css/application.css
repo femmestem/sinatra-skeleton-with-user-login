@@ -1,6 +1,76 @@
+body {
+  padding-top: 2.5em;
+}
+
+nav {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  height: 2.5em;
+  line-height: 2.5em;
+  background: #000;
+}
+
+nav ul {
+  float: left;
+  list-style-type: none;
+  margin: 0;
+}
+
+nav li {
+  display: inline;
+  margin-right: .75em;
+  color: silver;
+}
+
+nav li a {
+  color: white;
+  text-decoration: none;
+}
+
+form {
+  margin-top: 2.5em;
+}
+
+form fieldset {
+  background: rgba(0,0,0,0.1);
+  position: relative;
+}
+
+label {
+  font-size: .75em;
+}
+
+legend {
+  font-weight: bold;
+  position: absolute;
+  text-transform: uppercase;
+  top: -1.75em;
+}
+
+form input {
+  margin: .5em 0;
+  display: list-item;
+}
+
+form input[type="submit"] {
+  background: black;
+  color: white;
+  padding: .25em;
+  margin: .75em 0 0;
+}
+
 .container {
   margin: 20px auto;
   width: 720px;
-  padding: 0px 20px 20px 20px;
-  border: 1px dotted black;
 }
+
+.errors {
+  width: 100%;
+  margin: 0 auto;
+  padding: 1em 0;
+  background: rgba(255, 31, 0, 0.71);
+  color: white;
+  text-align: center;
+}
+

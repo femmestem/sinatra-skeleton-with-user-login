@@ -20,6 +20,28 @@
 <body>
   <!-- This layout encapsulates all other views, i.e.
   all of your erb files are embedded here between the body tags -->
-  <%= yield %>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+
+  <% if current_user %>
+      <li><%= current_user.id %></li>
+      <li><%= current_user.first_name %></li>
+      <li><%= current_user.last_name %></li>
+      <li><%= current_user.email %></li>
+      <li><a href="/logout">Logout</a></li>
+  <% else %>
+      <li><a href="/login">Login</a></li>
+  <% end %>
+
+    </ul>
+  </nav>
+  <div class="container">
+    <% if @errors %>
+      <div class="errors"><%= @errors %></div>
+    <% end %>
+    <%= yield %>
+  </div>
+
 </body>
 </html>
