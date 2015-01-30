@@ -7,20 +7,20 @@ require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
 
 require 'rubygems'
 
+require 'uri'
+require 'pathname'
+
 require 'pg'
 require 'bcrypt'
 require 'active_record'
 require 'logger'
 
-# requiring `sinatra' automatically loads sinatra server
-# sinatra runs on port 4567,
 require 'sinatra'
+require 'sinatra/partial'
 require 'sinatra/reloader' if development?
 require 'pry' if development?
 
-require 'shotgun'
-# shotgun creates its own port 9393 to monitor changes for live reload behavior
-
+# server-side templating
 require 'erb'
 
 # testing
@@ -30,27 +30,8 @@ require 'shoulda-matchers'
 require 'factory_girl'
 require 'faker'
 
-require 'uri'
-# we use this to do all the fun stuff below
-require 'pathname'
-
-# File.expand_path(file_name, dir_string) # => absolute_file_name
-
-# First it resolves the parent of __FILE__, that is whatever directory
-# that your current file is in
-# Then go to the parent, root of the project (specified by first arg),
-# and append the current file name.
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
-# => "~/Desktop/scratch-cards"
-
-APP_NAME = APP_ROOT.basename.to_s # convert Pathname object to path string
-# => "MVC_Sinatra-BCrypt"
-
-# p APP_ROOT.join('app') # appends path with '/#{arg}'
-# => #<Pathname:/Users/Host/Desktop/MVC_Sinatra-BCrypt/app>
-
-# p APP_ROOT.join('app', 'models') # appends path with '/#{arg*}'
-# => #<Pathname:/Users/Host/Desktop/MVC_Sinatra-BCrypt/app/models>
+APP_NAME = APP_ROOT.basename.to_s
 
 configure do
   # By default, Sinatra assumes that the root is the file that calls the configure block.
@@ -60,29 +41,23 @@ configure do
   enable :sessions
   set :session_secret, ENV['SESSION_SECRET'] || 'this is a secret shhhhh'
 
-  # HTML only allows `post' and `get' by default
-  # RESTful convention uses `put' and `delete' controller routes
-  # Translates`put' and `delete' routes in Sinatra controller to
-  # appropriate `post' request through in HTML
+  # HTML parses `post` and `get` requests only
+  # This extends the controller to also use `put` and `delete`
   enable :method_override
-  # Use hidden field to trigger appropriate form action:
+  # Usage:
   # <form action="" method="post">
-  #   <input type="hidden" name="_method" value="put" />
-  #   <input type="hidden" name="_method" value="delete" />
+  #   <input type="hidden" name="_method" value="[put/delete]" />
   # </form>
 
-  # Set the views to
+  # Set up the views
   set :views, File.join(Sinatra::Application.root, "app", "views")
+  set :partial_template_engine, :erb
+  enable :partial_underscores
 end
 
 # Set up the controllers and helpers
 Dir[APP_ROOT.join('app', 'controllers', '*.rb')].each { |file| require file }
 Dir[APP_ROOT.join('app', 'helpers', '*.rb')].each { |file| require file }
-# Dir is a standard library class in Ruby
-# Takes a string (assumed to be a path) and creates an array of
-# the files that end in `.rb'
-# By wrapping the string in Dir, we're telling Ruby 'this is a pathname'
-# and Dir knows to parse it as a file structure }
 
 # Set up the database and models
 require APP_ROOT.join('config', 'database')
