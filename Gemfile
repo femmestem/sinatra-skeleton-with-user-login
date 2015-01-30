@@ -1,28 +1,28 @@
-# source :rubygems
 source 'https://rubygems.org'
 
-# PostgreSQL driver
-gem 'pg'
+gem 'rake'
 
 # Sinatra driver
 gem 'sinatra'
 gem 'sinatra-contrib'
+gem 'sinatra-partial'
 
-# Use Thin for our web server
+# Use Thin as web server
 gem 'thin'
 
-gem 'activesupport'
-gem 'activerecord'
+# Detect changes and automatically reload web server
 gem 'shotgun'
 
-gem 'bcrypt'
-# gem 'bcrypt-ruby'
-#`bcrypt (~> 3.1.7)` required in Gemfile to use `:has_secure_password`
-# gem 'bcrypt', '~> 3.1.7'
+# Use PostgreSQL database
+gem 'pg'
 
-# gem 'bcrypt-ruby'
+# Use ActiveRecord object relational map
+gem 'activerecord'
+gem 'activesupport'
 
-gem 'rake'
+# Includes ActiveModel has_secure_password
+gem 'bcrypt', '~> 3.1.7'
+
 
 group :test do
   gem 'shoulda-matchers'
@@ -30,7 +30,9 @@ group :test do
   gem 'rspec'
 end
 
-group :test, :development do
-  gem 'factory_girl'
+group :development, :test do
   gem 'faker'
+  gem 'factory_girl'
+  gem 'tux'
+  gem 'pry'
 end

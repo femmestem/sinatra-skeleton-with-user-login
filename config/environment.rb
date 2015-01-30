@@ -9,14 +9,14 @@ require 'rubygems'
 
 require 'pg'
 require 'bcrypt'
-# require 'bcrypt-ruby'
 require 'active_record'
 require 'logger'
 
 # requiring `sinatra' automatically loads sinatra server
 # sinatra runs on port 4567,
 require 'sinatra'
-require "sinatra/reloader" if development?
+require 'sinatra/reloader' if development?
+require 'pry' if development?
 
 require 'shotgun'
 # shotgun creates its own port 9393 to monitor changes for live reload behavior
